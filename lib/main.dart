@@ -26,6 +26,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ActiveTodoCountCubit>(
           create: (context) => ActiveTodoCountCubit(
+            initialActiveTodoCount:
+                context.read<TodoListCubit>().state.todos.length,
             todoListCubit: BlocProvider.of<TodoListCubit>(context),
           ),
         ),

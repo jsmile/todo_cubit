@@ -13,9 +13,13 @@ class ActiveTodoCountCubit extends Cubit<ActiveTodoCountState> {
   final TodoListCubit todoListCubit;
   // 생성자의 body 에서 초기화가 가능하도록 late 키워드를 사용.
   late final StreamSubscription todoListSubscription;
+  // 초기 TODO List count 반영 시 사용
+  final int initialActiveTodoCount;
 
-  ActiveTodoCountCubit({required this.todoListCubit})
-      : super(ActiveTodoCountState.initial()) {
+  ActiveTodoCountCubit({
+    required this.initialActiveTodoCount,
+    required this.todoListCubit,
+  }) : super(ActiveTodoCountState(activeTodoCount: initialActiveTodoCount)) {
     todoListSubscription =
         todoListCubit.stream.listen((TodoListState todoListState) {
       final activeTodoCount = todoListState.todos
