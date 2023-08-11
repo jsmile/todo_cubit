@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_cubit/cubits/cubits.dart';
 
-import 'pages/todos_page.dart';
+import 'pages/todos_page/todos_page.dart';
 
 void main() {
   runApp(const MyApp());

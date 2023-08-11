@@ -12,6 +12,7 @@ class TodoListCubit extends Cubit<TodoListState> {
     final newTodo = Todo(desc: todoDesc);
     final newTodos = [...state.todos, newTodo];
     emit(state.copyWith(todos: newTodos));
+    print('*** TODO State : $state');
   }
 
   // 수정사항이 있다면 state 전체( state.todos )를 바꾸는 방식.
