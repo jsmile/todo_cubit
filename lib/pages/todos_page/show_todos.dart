@@ -30,6 +30,30 @@ class ShowTodos extends StatelessWidget {
           onDismissed: (_) {
             context.read<TodoListCubit>().removeTodo(todos[index]);
           },
+          confirmDismiss: (direction) {
+            return showDialog(
+              context: context,
+              // false : modal dialog,  true : modeless dialog
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content:
+                      const Text('Do you really want to delete this item ?'),
+                  actions: [
+                    TextButton(
+                      child: const Text('No'),
+                      onPressed: () => Navigator.pop(context, false),
+                    ),
+                    TextButton(
+                      child: const Text('Yes'),
+                      onPressed: () => Navigator.pop(context, true),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         );
       },
     );
