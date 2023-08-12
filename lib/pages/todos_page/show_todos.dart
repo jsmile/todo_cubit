@@ -19,9 +19,30 @@ class ShowTodos extends StatelessWidget {
           color: Colors.grey,
         );
       },
-      itemBuilder: (context, index) => Text(
-        todos[index].desc,
-        style: const TextStyle(fontSize: 20.0),
+      itemBuilder: (context, index) {
+        return Dismissible(
+          key: ValueKey(todos[index].id),
+          background: showBackground(0),
+          secondaryBackground: showBackground(1),
+          child: Text(
+            todos[index].desc,
+            style: const TextStyle(fontSize: 20.0),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget showBackground(int direction) {
+    return Container(
+      color: Colors.grey,
+      margin: const EdgeInsets.all(4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      alignment: direction == 0 ? Alignment.centerLeft : Alignment.centerRight,
+      child: const Icon(
+        Icons.delete,
+        color: Colors.white,
+        size: 30.0,
       ),
     );
   }
