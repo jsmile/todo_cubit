@@ -28,8 +28,9 @@ class TodoHeader extends StatelessWidget {
         Text(
           '${context.watch<ActiveTodoCountCubit>().state.activeTodoCount} items left',
           style: const TextStyle(
-            color: Colors.redAccent,
+            color: Colors.green,
             fontSize: 20.0,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

@@ -30,6 +30,30 @@ class ShowTodos extends StatelessWidget {
           onDismissed: (_) {
             context.read<TodoListCubit>().removeTodo(todos[index]);
           },
+          confirmDismiss: (direction) {
+            return showDialog(
+              context: context,
+              // false : modal dialog,  true : modeless dialog
+              barrierDismissible: false,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Are you sure?'),
+                  content:
+                      const Text('Do you really want to delete this item ?'),
+                  actions: [
+                    TextButton(
+                      child: const Text('No'),
+                      onPressed: () => Navigator.pop(context, false),
+                    ),
+                    TextButton(
+                      child: const Text('Yes'),
+                      onPressed: () => Navigator.pop(context, true),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
         );
       },
     );
@@ -50,6 +74,7 @@ class ShowTodos extends StatelessWidget {
   }
 }
 
+// 생성자로 Todo 아이템을 전달받아서 보여주는 위젯이므로 StatefulWidget으로 생성
 class TodoItem extends StatefulWidget {
   final Todo todo;
 
