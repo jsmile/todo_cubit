@@ -21,6 +21,8 @@ class _CreateTodoState extends State<CreateTodo> {
         if (todoDesc != null && todoDesc.isNotEmpty) {
           context.read<TodoListCubit>().addTodo(todoDesc);
           // 입력내용 지우기
+          print(
+              '### new Todo List : ${context.read<TodoListCubit>().state.todos}');
           newEditingController.clear();
         }
       },

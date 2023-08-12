@@ -16,23 +16,32 @@ class FilteredTodosCubit extends Cubit<FilteredTodosState> {
   final TodoFilterCubit todoFilterCubit;
   final TodoSearchCubit todoSearchCubit;
 
+  final List<Todo> initialFilteredTodos;
+
   late final StreamSubscription todoListSubscription;
   late final StreamSubscription todoFilterSubscription;
   late final StreamSubscription todoSearchSubscription;
 
   FilteredTodosCubit({
+    required this.initialFilteredTodos,
     required this.todoListCubit,
     required this.todoFilterCubit,
     required this.todoSearchCubit,
-  }) : super(FilteredTodosState.initial()) {
+  }) : super(FilteredTodosState(filteredTodos: initialFilteredTodos)) {
     todoListSubscription = todoListCubit.stream.listen(
-      (TodoListState todoListState) {},
+      (TodoListState todoListState) {
+        setFilteredTodos();
+      },
     );
     todoFilterSubscription = todoFilterCubit.stream.listen(
-      (event) {},
+      (TodoFilterState todoFilterState) {
+        setFilteredTodos();
+      },
     );
     todoSearchSubscription = todoSearchCubit.stream.listen(
-      (event) {},
+      (TodoSearchState todoSearchState) {
+        setFilteredTodos();
+      },
     );
   }
 
@@ -70,5 +79,13 @@ class FilteredTodosCubit extends Cubit<FilteredTodosState> {
 
     // Filtered Todos State 를 업데이트 한다.
     emit(state.copyWith(filteredTodos: filteredTodos));
+  }
+
+  @override
+  Future<void> close() {
+    todoFilterSubscription.cancel();
+    todoSearchSubscription.cancel();
+    todoListSubscription.cancel();
+    return super.close();
   }
 }

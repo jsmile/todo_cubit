@@ -3,6 +3,7 @@ import 'package:todo_cubit/pages/todos_page/create_todo.dart';
 import 'package:todo_cubit/pages/todos_page/search_and_filter_todo.dart';
 
 import 'todo_header.dart';
+import 'show_todos.dart';
 
 class TodosPage extends StatelessWidget {
   const TodosPage({super.key});
@@ -23,6 +24,7 @@ class TodosPage extends StatelessWidget {
                 CreateTodo(),
                 SizedBox(height: 10.0),
                 SearchAndFilterTodo(),
+                ShowTodos(),
               ],
             ),
           ),
