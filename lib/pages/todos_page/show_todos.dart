@@ -108,7 +108,7 @@ class _TodoItemState extends State<TodoItem> {
           builder: (context) {
             bool bEmpty = false;
             _textController.text = widget.todo.desc;
-            // showDialog() 는 Widget Tree 의 sub tree 에 포함되지 않으므로
+            // showDialog() 는 TodoItem widget 의 child widget 에 포함되지 않으므로
             // StatefulBuilder() 를 사용
             return StatefulBuilder(
                 builder: (BuildContext context, StateSetter setState) {

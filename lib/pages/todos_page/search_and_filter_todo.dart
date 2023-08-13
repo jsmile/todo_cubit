@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_cubit/cubits/cubits.dart';
+import 'package:todo_cubit/utils/debounce.dart';
 
 import '../../models/todo_model.dart';
 
 class SearchAndFilterTodo extends StatelessWidget {
-  const SearchAndFilterTodo({super.key});
+  final Debounce debounce = Debounce(milliseconds: 1000);
+
+  // non constant property 인 debounce가 있으므로 const 생성자를 사용할 수 없음.
+  SearchAndFilterTodo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +23,11 @@ class SearchAndFilterTodo extends StatelessWidget {
             prefixIcon: Icon(Icons.search),
           ),
           onChanged: (String? newSearchTerm) {
-            if (newSearchTerm != null) {
-              context.read<TodoSearchCubit>().setSearchTerm(newSearchTerm);
-            }
+            debounce.run(() {
+              if (newSearchTerm != null) {
+                context.read<TodoSearchCubit>().setSearchTerm(newSearchTerm);
+              }
+            });
           },
         ),
         const SizedBox(
