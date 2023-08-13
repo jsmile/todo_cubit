@@ -10,7 +10,6 @@ class ShowTodos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final todos = context.watch<FilteredTodosCubit>().state.filteredTodos;
-    print('*** A todos : $todos');
 
     return ListView.separated(
       primary: false,
@@ -86,9 +85,70 @@ class TodoItem extends StatefulWidget {
 }
 
 class _TodoItemState extends State<TodoItem> {
+  late final TextEditingController _textController;
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            bool bEmpty = false;
+            _textController.text = widget.todo.desc;
+            // showDialog() 는 Widget Tree 의 sub tree 에 포함되지 않으므로
+            // StatefulBuilder() 를 사용
+            return StatefulBuilder(
+                builder: (BuildContext context, StateSetter setState) {
+              return AlertDialog(
+                title: const Text('Edit Todo'),
+                content: TextField(
+                  controller: _textController,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                      errorText: bEmpty ? 'Value Can\'t Be Empty' : null),
+                ),
+                actions: [
+                  TextButton(
+                    child: const Text('Cancel'),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  TextButton(
+                    child: const Text('Edit'),
+                    onPressed: () {
+                      // State 변경 시 호출됨.
+                      setState(
+                        () {
+                          bEmpty = _textController.text.isEmpty ? true : false;
+                          if (!bEmpty) {
+                            context.read<TodoListCubit>().editTodo(
+                                  widget.todo.id,
+                                  _textController.text,
+                                );
+                            Navigator.pop(context);
+                          }
+                        },
+                      );
+                    },
+                  ),
+                ],
+              );
+            });
+          },
+        );
+      },
       leading: Checkbox(
         value: widget.todo.completed,
         onChanged: (bool? checked) {
