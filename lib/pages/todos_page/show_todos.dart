@@ -91,7 +91,9 @@ class _TodoItemState extends State<TodoItem> {
     return ListTile(
       leading: Checkbox(
         value: widget.todo.completed,
-        onChanged: (bool? checked) {},
+        onChanged: (bool? checked) {
+          context.read<TodoListCubit>().toggleTodo(widget.todo.id);
+        },
       ),
       // widget 자신을 참조할 때, widget. 으로 접근함.
       title: Text(widget.todo.desc),

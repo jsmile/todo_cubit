@@ -52,13 +52,13 @@ class FilteredTodosCubit extends Cubit<FilteredTodosState> {
     switch (todoFilterCubit.state.filter) {
       case Filter.active:
         filteredTodos = todoListCubit.state.todos
-            .where((Todo todo) => todo.completed == Filter.active)
+            .where((Todo todo) => !todo.completed)
             .toList();
         break;
 
       case Filter.completed:
         filteredTodos = todoListCubit.state.todos
-            .where((Todo todo) => todo.completed == Filter.completed)
+            .where((Todo todo) => todo.completed)
             .toList();
         break;
 

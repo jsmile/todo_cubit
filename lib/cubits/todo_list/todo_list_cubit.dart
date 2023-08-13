@@ -39,7 +39,11 @@ class TodoListCubit extends Cubit<TodoListState> {
     final newTodos = state.todos.map(
       (Todo todo) {
         if (todo.id == id) {
-          return Todo(id: id, desc: todo.desc, completed: !todo.completed);
+          return Todo(
+            id: id,
+            desc: todo.desc,
+            completed: !todo.completed,
+          );
         } else {
           return todo;
         }
