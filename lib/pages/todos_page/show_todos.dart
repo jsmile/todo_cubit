@@ -61,13 +61,14 @@ class ShowTodos extends StatelessWidget {
 
   Widget showBackground(int direction) {
     return Container(
-      color: Colors.grey,
+      // color: Colors.green,
+      color: const Color.fromRGBO(0, 255, 0, 0.2),
       margin: const EdgeInsets.all(4.0),
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       alignment: direction == 0 ? Alignment.centerLeft : Alignment.centerRight,
       child: const Icon(
         Icons.delete,
-        color: Colors.white,
+        color: Colors.grey,
         size: 30.0,
       ),
     );
